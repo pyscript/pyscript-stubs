@@ -67,7 +67,6 @@ class Device:
         ...
 
     def __getitem__(self, key: str) -> Any: ...
-
     @classmethod
     async def load(
         cls,

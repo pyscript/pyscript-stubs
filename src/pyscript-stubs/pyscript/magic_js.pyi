@@ -67,8 +67,6 @@ HTML elements when running in the main thread.
 
 Not available in worker context (None)."""
 
-
-
 sync: Callable[[Any], Any]
 """
 A function used to pass serializable data from workers to the main thread.
@@ -88,4 +86,3 @@ def current_target() -> Any:
     rRef: https://docs.pyscript.net/2025.8.1/api/#pyscriptcurrent_target
     """
     ...
-

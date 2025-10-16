@@ -28,7 +28,6 @@ class _ReadOnlyProxy:
     """
 
     def __getitem__(self, name: str) -> Any: ...
-
     def __getattr__(self, name: str) -> Any: ...
 
 workers: _ReadOnlyProxy

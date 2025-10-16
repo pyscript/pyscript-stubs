@@ -5,7 +5,6 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-
 from typing import Any, Type
 
 class Storage(dict[str, Any]):
@@ -27,9 +26,7 @@ class Storage(dict[str, Any]):
         ...
 
     def __delitem__(self, attr: str) -> None: ...
-
     def __setitem__(self, attr: str, value: Any) -> None: ...
-
     def clear(self) -> None:
         """
         Remove all items from storage.

@@ -5,7 +5,6 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-
 from typing import Any, Callable
 
 class _Known:

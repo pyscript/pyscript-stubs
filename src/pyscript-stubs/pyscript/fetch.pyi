@@ -24,9 +24,7 @@ class _Response:
         """
         ...
 
-    def __getattr__(self, attr: str) -> Any:
-        ...
-
+    def __getattr__(self, attr: str) -> Any: ...
     async def arrayBuffer(self) -> memoryview:
         """
         Read the response body as an ArrayBuffer.

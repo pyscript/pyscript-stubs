@@ -5,19 +5,19 @@ from .element import Element
 
 class Node(EventTarget):
     baseURI: str
-    childNodes: list['Node']
-    firstChild: 'Node'
+    childNodes: list["Node"]
+    firstChild: "Node"
     isConnected: bool
-    lastChild: 'Node'
-    nextSibling: 'Node'
+    lastChild: "Node"
+    nextSibling: "Node"
     nodeName: str
     nodeType: int
     nodeValue: any
-    ownerDocument: 'Document'
-    parentNode: Optional['Node']
-    parentElement: Optional['Element']
-    previousSibling: Optional['Node']
+    ownerDocument: "Document"
+    parentNode: Optional["Node"]
+    parentElement: Optional["Element"]
+    previousSibling: Optional["Node"]
     textContent: str
 
-    def appendChild(self, childNode: 'Node'): ...
-    def cloneNode(self) -> 'Node': ...
+    def appendChild(self, childNode: "Node"): ...
+    def cloneNode(self) -> "Node": ...
