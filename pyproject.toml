@@ -4,9 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyscript_stubs"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Greger Stolt Nilsen", email="gregersn@gmail.com" },
+  { name="Jos Verlinde", email="jos_verlinde@hotmail.com" },
 ]
 description = "Typing stubs for Pyscript"
 readme = "README.md"
@@ -14,9 +15,18 @@ requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
-    "License :: OSI Approved :: MIT License",
 ]
-
+license = "MIT AND Apache-2.0"
 [project.urls]
-Homepage = "https://github.com/gregersn/pyscript-stubs"
-Issues = "https://github.com/gregersn/pyscript-stubs/issues"
+Homepage = "https://github.com/pyscript/pyscript-stubs"
+Issues = "https://github.com/pyscript/pyscript-stubs/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pyscript*"]
+
+[tool.setuptools.package-data]
+pyscript = ["**/*.pyi"]
