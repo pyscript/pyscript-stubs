@@ -5,6 +5,8 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
+from __future__ import annotations
+
 from typing import Any
 
 def _get(name: str) -> Any:
@@ -40,8 +42,8 @@ Provides access to workers created with create_named_worker() by their names.
 async def create_named_worker(
     src: str = "",
     name: str = "",
-    config: dict[str, Any] | None = None,
-    type: str = "micropython",
+    config: dict[str, Any] | None = ...,
+    type: str = ...,
 ) -> Any:
     """
     Create a named web worker for parallel execution.

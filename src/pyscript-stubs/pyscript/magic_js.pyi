@@ -7,24 +7,25 @@ see: https://docs.pyscript.net/2025.2.3/api/
 
 from __future__ import annotations
 
-import sys
-from typing import Any, Callable
+from collections.abc import Callable
+from types import ModuleType
+from typing import Any
 
-from _pyscript import PyWorker as PyWorker
-from _pyscript import js_import as js_import
-from libcst import Not
-from typing_extensions import Incomplete
+from ._pyscript import PyWorker as PyWorker
+from ._pyscript import js_import as js_import
+from ._typeshed import Incomplete
 
-RUNNING_IN_WORKER: bool
+RUNNING_IN_WORKER: bool = ...
 """True if code is running in a web worker, False if in main thread."""
 
-config: dict[str, Any]
+config: dict[str, Any] = ...
 """PyScript configuration object containing runtime settings."""
 
 # generate N modules in the system that will proxy the real value
 # for name in globalThis.Reflect.ownKeys(js_modules):
 #     sys.modules[f"pyscript.js_modules.{name}"] = JSModule(name)
 # sys.modules["pyscript.js_modules"] = js_modules
+js_modules: ModuleType = ...
 
 class JSModule:
     """
@@ -45,7 +46,6 @@ class JSModule:
 
     def __getattr__(self, field: str) -> Any | None: ...
 
-PyWorker: None
 """Not available in worker context (None)."""
 
 window: Incomplete | None

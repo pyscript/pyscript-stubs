@@ -1,7 +1,11 @@
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Callable
+from __future__ import annotations
+
+from collections.abc import Callable
+from typing import Any
+
 from _typeshed import Incomplete
 
 def js_import(name: str) -> JSModule:
@@ -9,11 +13,11 @@ def js_import(name: str) -> JSModule:
     ...
 
 class JSModule:
-    def __init__(self, name) -> None: ...
-    def __getattr__(self, field) -> Any | None: ...
+    def __init__(self, name: str) -> None: ...
+    def __getattr__(self, field: str) -> Any | None: ...
 
 class Worker:
-    async def sync(self) -> Callable: ...
+    async def sync(self) -> Callable[[Any], Any]: ...
 
 class XWorker(Worker):
     # https://pyscript.github.io/polyscript/#xworker-options
@@ -24,9 +28,9 @@ class XWorker(Worker):
     def __init__(
         self,
         file: str,
-        a_sync: bool = True,
-        config: str = "",
-        type: str = "pyodide",  #  pyodide, micropython, ruby-wasm-wasi, wasmoon, webr
+        a_sync: bool = ...,
+        config: str = ...,
+        type: str = ...,  #  pyodide, micropython, ruby-wasm-wasi, wasmoon, webr
         version: str = ...,
         serviceWorker: str = ...,
     ) -> None: ...
@@ -34,6 +38,6 @@ class XWorker(Worker):
     # def isWindowProxy(self, ref:Incomplete) -> bool: ...
 
 class PyWorker(XWorker):
-    def __init__(self, name) -> None: ...
+    def __init__(self, name: str) -> None: ...
 
 xworker: XWorker = ...

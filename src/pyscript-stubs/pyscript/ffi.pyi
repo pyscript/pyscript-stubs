@@ -5,7 +5,10 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Callable, Iterable, Mapping
+from __future__ import annotations
+
+from collections.abc import Callable, Iterable, Mapping
+from typing import Any
 
 def from_entries(iterable: Iterable[tuple[str, Any]]) -> Any:
     """

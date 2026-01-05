@@ -8,9 +8,11 @@ allowing mounting, syncing, and unmounting of virtual filesystems.
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Dict, Literal
+from __future__ import annotations
 
-mounted: Dict[str, Dict[str, Any]]
+from typing import Any, Literal
+
+mounted: dict[str, dict[str, Any]]
 """Dictionary mapping mount points to filesystem information"""
 
 async def mount(

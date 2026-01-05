@@ -6,7 +6,7 @@ As a convenience, and to ensure backwards compatibility, PyScript allows the use
 Warning:
     This classic pattern of coding (inline event handlers) is no longer considered good practice in web development circles.
 
-We include this behaviour for historic reasons, but the folks at Mozilla have a good explanation of why this is currently considered bad practice.
+We include this behavior for historic reasons, but the folks at Mozilla have a good explanation of why this is currently considered bad practice.
 
 These attributes, expressed as py-* or mpy-* attributes of an HTML element, reference the name of a Python function to run when the event is fired.
 You should replace the * with the actual name of an event (e.g. py-click or mpy-click). This is similar to how all event handlers on elements start
@@ -18,18 +18,17 @@ with on in standard HTML (e.g. onclick). The rule of thumb is to simply replace 
 
 from __future__ import annotations
 
-from typing import Any, Generator, List
+from collections.abc import Generator, Iterable, Iterator
+from typing import Any, Self
 
-from _typeshed import Incomplete
-from pyscript import Event, document
-from pyscript import when as when
-from pyscript.ffi import create_proxy
-from typing_extensions import Self
+from .events import Event
+from ._typeshed import Incomplete
 
 ELEMENT_CLASSES: ElementCollection = ...
+
 page: Page = ...
 
-def wrap_dom_element(dom_element):
+def wrap_dom_element(dom_element: Element) -> Element:
     """Wrap an existing DOM element in an instance of a subclass of `Element`.
 
     This is just a convenience function to avoid having to import the `Element` class
@@ -51,17 +50,17 @@ class Element:
         ...
 
     @classmethod
-    def register_element_classes(cls, element_classes) -> None:
+    def register_element_classes(cls, element_classes: Iterable[type[Element]]) -> None:
         """Register an iterable of element classes."""
         ...
 
     @classmethod
-    def unregister_element_classes(cls, element_classes) -> None:
+    def unregister_element_classes(cls, element_classes: Iterable[type[Element]]) -> None:
         """Unregister an iterable of element classes."""
         ...
 
     @classmethod
-    def wrap_dom_element(cls, dom_element):
+    def wrap_dom_element(cls, dom_element: Element) -> Element:
         """Wrap an existing DOM element in an instance of a subclass of `Element`.
 
         We look up the `Element` subclass by the DOM element's tag name. For any unknown
@@ -69,7 +68,7 @@ class Element:
         """
         ...
 
-    def __init__(self, dom_element=..., classes=..., style=..., **kwargs) -> None:
+    def __init__(self, dom_element: Element =..., classes: Iterable[type[Element]] = ..., style: str = ..., **kwargs: Any) -> None:
         """Create a new, or wrap an existing DOM element.
 
         If `dom_element` is None we are being called to *create* a new element.
@@ -77,11 +76,11 @@ class Element:
         """
         ...
 
-    def __eq__(self, obj) -> bool:
+    def __eq__(self, obj: Any) -> bool:
         """Check for equality by comparing the underlying DOM element."""
         ...
 
-    def __getitem__(self, key) -> ElementCollection:
+    def __getitem__(self, key: str) -> ElementCollection:
         """Get an item within the element's children.
 
         If `key` is an integer or a slice we use it to index/slice the element's
@@ -89,7 +88,7 @@ class Element:
         """
         ...
 
-    def __getattr__(self, name) -> Event | Any:
+    def __getattr__(self, name: str) -> Event | str | Any:
         """
         Get an attribute from the element.
 
@@ -99,8 +98,9 @@ class Element:
         """
         ...
 
-    def __setattr__(self, name, value) -> None: ...
-    def get_event(self, name) -> Event:
+    def __setattr__(self, name: str, value: Any) -> None: ...
+
+    def get_event(self, name: str) -> Event:
         """
         Get an `Event` instance for the specified event name.
         """
@@ -126,15 +126,56 @@ class Element:
         """Return the element's `style` attribute as a `Style` instance."""
         ...
 
-    def append(self, *items) -> None:
+    @property
+    def textContent(self) -> str:
+        ...
+
+    @textContent.setter
+    def textContent(self, value: str) -> None:
+        ...
+
+    @property
+    def tagName(self) -> str:
+        ...
+
+    @property
+    def value(self) -> str:
+        ...
+
+    @value.setter
+    def value(self, value: Any) -> None:
+        ...
+
+    @property
+    def checked(self) -> bool:
+        ...
+
+    @checked.setter
+    def checked(self, value: bool) -> None:
+        ...
+
+    @property
+    def files(self) -> list[Any]:
+        ...
+
+    def getAttribute(self, name: str) -> str:
+        ...
+
+    def setAttribute(self, name: str, value: Any) -> None:
+        ...
+
+    def dispatchEvent(self, event: Event) -> None:
+        ...
+
+    def append(self, *items: Element) -> None:
         """Append the specified items to the element."""
         ...
 
-    def clone(self, clone_id=...):
+    def clone(self, clone_id: str | None = ...) -> Element:
         """Make a clone of the element (clones the underlying DOM object too)."""
         ...
 
-    def find(self, selector) -> ElementCollection:
+    def find(self, selector: str) -> ElementCollection:
         """Find all elements that match the specified selector.
 
         Return the results as a (possibly empty) `ElementCollection`.
@@ -145,7 +186,7 @@ class Element:
         """Convenience method for 'element.scrollIntoView()'."""
         ...
 
-    def update(self, classes=..., style=..., **kwargs) -> None:
+    def update(self, classes: Iterable[type[Element]] = ..., style: str = ..., **kwargs: Any) -> None:
         """Update the element with the specified classes, styles, and DOM properties."""
         ...
 
@@ -153,29 +194,29 @@ class Classes:
     """A set-like interface to an element's `classList`."""
 
     def __init__(self, element: Element) -> None: ...
-    def __contains__(self, item) -> bool: ...
-    def __eq__(self, other) -> bool: ...
-    def __iter__(self): ...
+    def __contains__(self, item: type[Element]) -> bool: ...
+    def __eq__(self, other: Any) -> bool: ...
+    def __iter__(self) -> Iterator[str]: ...
     def __len__(self) -> int: ...
     def __repr__(self) -> str: ...
     def __str__(self) -> str: ...
-    def add(self, *class_names) -> None:
+    def add(self, *class_names: str) -> None:
         """Add one or more classes to the element."""
         ...
 
-    def contains(self, class_name) -> bool:
+    def contains(self, class_name: str) -> bool:
         """Check if the element has the specified class."""
         ...
 
-    def remove(self, *class_names) -> None:
+    def remove(self, *class_names: str) -> None:
         """Remove one or more classes from the element."""
         ...
 
-    def replace(self, old_class, new_class) -> None:
+    def replace(self, old_class: str, new_class: str) -> None:
         """Replace one of the element's classes with another."""
         ...
 
-    def toggle(self, *class_names) -> None:
+    def toggle(self, *class_names: str) -> None:
         """Toggle one or more of the element's classes."""
         ...
 
@@ -197,8 +238,8 @@ class Options:
     `clear` methods.
     """
 
-    def __init__(self, element) -> None: ...
-    def __getitem__(self, key): ...
+    def __init__(self, element: Element) -> None: ...
+    def __getitem__(self, key: str) -> Element: ...
     def __iter__(self) -> Generator[Any, Any, None]: ...
     def __len__(self) -> int: ...
     def __repr__(self) -> str: ...
@@ -208,11 +249,11 @@ class Options:
         ...
 
     @property
-    def selected(self):
+    def selected(self) -> Any:
         """Return the selected option."""
         ...
 
-    def add(self, value=..., html=..., text=..., before=..., **kwargs) -> None:
+    def add(self, value: str = ..., html: str = ..., text: str = ..., before: str = ..., **kwargs: Any) -> None:
         """Add a new option to the element"""
         ...
 
@@ -220,7 +261,7 @@ class Options:
         """Remove all options."""
         ...
 
-    def remove(self, index) -> None:
+    def remove(self, index: int) -> None:
         """Remove the option at the specified index."""
         ...
 
@@ -228,80 +269,80 @@ class Style:
     """A dict-like interface to an element's `style` attribute."""
 
     def __init__(self, element: Element) -> None: ...
-    def __getitem__(self, key) -> Element: ...
-    def __setitem__(self, key, value) -> None: ...
-    def remove(self, key) -> None:
+    def __getitem__(self, key: str) -> Element: ...
+    def __setitem__(self, key: str, value: Any) -> None: ...
+    def remove(self, key: str) -> None:
         """Remove a CSS property from the element."""
         ...
 
-    def set(self, **kwargs) -> None:
+    def set(self, **kwargs: Any) -> None:
         """Set one or more CSS properties on the element."""
         ...
 
     @property
     def visible(self) -> Incomplete: ...
     @visible.setter
-    def visible(self, value) -> None: ...
+    def visible(self, value: Any) -> None: ...
 
 class ContainerElement(Element):
     """Base class for elements that can contain other elements."""
 
-    def __init__(self, *args, children=..., dom_element=..., style=..., classes=..., **kwargs) -> None: ...
+    def __init__(self, *args: Any, children: Iterable[Element] = ..., dom_element: Element = ..., style: str = ..., classes: str = ..., **kwargs: Any) -> None: ...
     def __iter__(self) -> Generator[Any, Any, None]: ...
 
 class ClassesCollection:
     """A set-like interface to the classes of the elements in a collection."""
 
-    def __init__(self, collection) -> None: ...
-    def __contains__(self, class_name) -> bool: ...
-    def __eq__(self, other) -> bool: ...
+    def __init__(self, collection: Iterable[str]) -> None: ...
+    def __contains__(self, class_name: str) -> bool: ...
+    def __eq__(self, other: Any) -> bool: ...
     def __iter__(self) -> Generator[Any, Any, None]: ...
     def __len__(self) -> int: ...
     def __repr__(self) -> str: ...
     def __str__(self) -> str: ...
-    def add(self, *class_names) -> None:
+    def add(self, *class_names: str) -> None:
         """Add one or more classes to the elements in the collection."""
         ...
 
-    def contains(self, class_name) -> bool:
+    def contains(self, class_name: str) -> bool:
         """Check if any element in the collection has the specified class."""
         ...
 
-    def remove(self, *class_names) -> None:
+    def remove(self, *class_names: str) -> None:
         """Remove one or more classes from the elements in the collection."""
         ...
 
-    def replace(self, old_class, new_class) -> None:
+    def replace(self, old_class: str, new_class: str) -> None:
         """Replace one of the classes in the elements in the collection with another."""
         ...
 
-    def toggle(self, *class_names) -> None:
+    def toggle(self, *class_names: str) -> None:
         """Toggle one or more classes on the elements in the collection."""
         ...
 
 class StyleCollection:
     """A dict-like interface to the styles of the elements in a collection."""
 
-    def __init__(self, collection) -> None: ...
-    def __getitem__(self, key) -> list[Any]: ...
-    def __setitem__(self, key, value) -> None: ...
+    def __init__(self, collection: Iterable[str]) -> None: ...
+    def __getitem__(self, key: str) -> list[Any]: ...
+    def __setitem__(self, key: str, value: Any) -> None: ...
     def __repr__(self) -> str: ...
-    def remove(self, key) -> None:
+    def remove(self, key: str) -> None:
         """Remove a CSS property from the elements in the collection."""
         ...
 
 class ElementCollection:
     @classmethod
-    def wrap_dom_elements(cls, dom_elements) -> Self:
+    def wrap_dom_elements(cls, dom_elements: Iterable[Element]) -> Self:
         """Wrap an iterable of dom_elements in an `ElementCollection`."""
         ...
 
-    def __init__(self, elements: List[Element]) -> None: ...
-    def __eq__(self, obj) -> bool:
+    def __init__(self, elements: list[Element]) -> None: ...
+    def __eq__(self, obj: Any) -> bool:
         """Check for equality by comparing the underlying DOM elements."""
         ...
 
-    def __getitem__(self, key) -> ElementCollection:
+    def __getitem__(self, key: int | str) -> Element:
         """Get an item in the collection.
 
         If `key` is an integer or a slice we use it to index/slice the collection.
@@ -312,16 +353,16 @@ class ElementCollection:
     def __iter__(self) -> Generator[Any, Any, None]: ...
     def __len__(self) -> int: ...
     def __repr__(self) -> str: ...
-    def __getattr__(self, name) -> list[Any]: ...
-    def __setattr__(self, name, value) -> None: ...
+    def __getattr__(self, name: str) -> list[Any]: ...
+    def __setattr__(self, name: str, value: Any) -> None: ...
     @property
     def classes(self) -> ClassesCollection:
         """Return the classes of the elements in the collection as a `ClassesCollection`."""
         ...
 
     @property
-    def elements(self):
-        """Return the elements in the collection as a list."""
+    def elements(self) -> ElementCollection:
+        """Return the elements in the collection as a `ElementCollection`."""
         ...
 
     @property
@@ -329,7 +370,7 @@ class ElementCollection:
         """"""
         ...
 
-    def find(self, selector) -> ElementCollection:
+    def find(self, selector: str) -> ElementCollection:
         """Find all elements that match the specified selector.
 
         Return the results as a (possibly empty) `ElementCollection`.
@@ -415,7 +456,7 @@ class canvas(ContainerElement):
         """
         ...
 
-    def draw(self, what, width=..., height=...) -> None:
+    def draw(self, what: Element, width: int = ..., height: int = ...) -> None:
         """Draw `what` on the current element
 
         Inputs:
@@ -890,7 +931,7 @@ class Page:
     """Represents the whole page."""
 
     def __init__(self) -> None: ...
-    def __getitem__(self, selector) -> ElementCollection:
+    def __getitem__(self, selector: str) -> ElementCollection:
         """Get an item on the page.
 
         We don't index/slice the page like we do with `Element` and `ElementCollection`
@@ -905,17 +946,29 @@ class Page:
         ...
 
     @title.setter
-    def title(self, value) -> None:
+    def title(self, value: str) -> None:
         """Set the page title."""
         ...
 
-    def append(self, *items) -> None:
+    def append(self, *items: Element) -> None:
         """Shortcut for `page.body.append`."""
         ...
 
-    def find(self, selector) -> ElementCollection:
+    def find(self, selector: str) -> ElementCollection:
         """Find all elements that match the specified selector.
 
         Return the results as a (possibly empty) `ElementCollection`.
         """
+        ...
+
+    @property
+    def html(self) -> html:
+        ...
+
+    @property
+    def head(self) -> head:
+        ...
+
+    @property
+    def body(self) -> body:
         ...
