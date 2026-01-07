@@ -21,7 +21,7 @@ from __future__ import annotations
 from collections.abc import Generator, Iterable, Iterator
 from typing import Any, Self
 
-from js import Event as JsEvent
+from js import Event as JsEvent, FileList
 
 from .events import Event
 from ._typeshed import Incomplete
@@ -141,7 +141,7 @@ class Element:
         ...
 
     @property
-    def value(self) -> str:
+    def value(self) -> Any:
         ...
 
     @value.setter
@@ -157,7 +157,7 @@ class Element:
         ...
 
     @property
-    def files(self) -> list[Any]:
+    def files(self) -> FileList:
         ...
 
     def getAttribute(self, name: str) -> str | None:
