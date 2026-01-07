@@ -1,0 +1,46 @@
+from __future__ import annotations
+
+from collections.abc import Iterable
+from typing import Any
+
+from typing import ClassVar
+
+class Blob:
+    @classmethod
+    def new(cls, blobParts: Iterable[Any], options: Any) -> Blob: ...
+    async def arrayBuffer(self) -> int: ...
+
+class CSSStyleSheet:
+    @classmethod
+    def new(cls) -> CSSStyleSheet: ...
+    def replaceSync(self, text: str) -> None: ...
+
+class Event:
+    @classmethod
+    def new(cls, name: str) -> Event: ...
+
+class Node:
+    TEXT_NODE: ClassVar[int] = ...
+    nodeType: int
+    nodeValue: str
+    def append(self, *args: Node | str) -> None: ...
+
+class NodeFilter:
+    SHOW_TEXT: ClassVar[int] = ...
+
+class Text(Node): ...
+
+class Uint8Array:
+    @classmethod
+    def new(cls, bytes_: bytes) -> Uint8Array: ...
+
+class URL:
+    @classmethod
+    def createObjectURL(cls, object: Any) -> str: ...
+    @classmethod
+    def revokeObjectURL(cls, url: str) -> None: ...
+
+class Location:
+    def reload(self) -> None: ...
+
+location: Location

@@ -21,6 +21,8 @@ from __future__ import annotations
 from collections.abc import Generator, Iterable, Iterator
 from typing import Any, Self
 
+from js import Event as JsEvent
+
 from .events import Event
 from ._typeshed import Incomplete
 
@@ -158,13 +160,13 @@ class Element:
     def files(self) -> list[Any]:
         ...
 
-    def getAttribute(self, name: str) -> str:
+    def getAttribute(self, name: str) -> str | None:
         ...
 
     def setAttribute(self, name: str, value: Any) -> None:
         ...
 
-    def dispatchEvent(self, event: Event) -> None:
+    def dispatchEvent(self, event: Event | JsEvent) -> None:
         ...
 
     def append(self, *items: Element) -> None:

@@ -32,6 +32,7 @@ from .magic_js import (
     sync as sync,
     window as window,
     js_modules as js_modules,
+    TreeWalker as TreeWalker,
 )
 
 from .storage import Storage as Storage, storage as storage

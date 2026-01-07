@@ -11,9 +11,14 @@ from collections.abc import Callable
 from types import ModuleType
 from typing import Any
 
+from .web import Element
 from ._pyscript import PyWorker as PyWorker
 from ._pyscript import js_import as js_import
 from ._typeshed import Incomplete
+
+from pyodide.ffi import JsProxy
+
+from js import CSSStyleSheet, Node
 
 RUNNING_IN_WORKER: bool = ...
 """True if code is running in a web worker, False if in main thread."""
@@ -46,6 +51,19 @@ class JSModule:
 
     def __getattr__(self, field: str) -> Any | None: ...
 
+class _Stylesheets(list[CSSStyleSheet]):
+    def push(self, value: CSSStyleSheet) -> None: ...
+
+class TreeWalker:
+    currentNode: Node = ...
+    def nextNode(self) -> Node: ...
+
+class Document:
+    adoptedStyleSheets: _Stylesheets = ...
+
+    @classmethod
+    def createTreeWalker(cls, root: Element | JsProxy, whatToShow: int | None = ..., filter: Any | None = ...) -> TreeWalker: ...
+
 """Not available in worker context (None)."""
 
 window: Incomplete | None
@@ -58,7 +76,7 @@ and methods when running in the main thread.
 Not available in worker context (None).
 """
 
-document: Incomplete | None
+document: Document = ...
 """
 The browser's document object.
 
