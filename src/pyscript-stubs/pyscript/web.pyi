@@ -192,6 +192,9 @@ class Element:
         """Update the element with the specified classes, styles, and DOM properties."""
         ...
 
+    def checkValidity(self) -> bool:
+        ...
+
 class Classes:
     """A set-like interface to an element's `classList`."""
 
