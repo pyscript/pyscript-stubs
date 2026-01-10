@@ -195,6 +195,9 @@ class Element:
     def checkValidity(self) -> bool:
         ...
 
+    def click(self) -> None:
+        ...
+
 class Classes:
     """A set-like interface to an element's `classList`."""
 

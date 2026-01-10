@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Iterable
+from collections.abc import Buffer, Iterable
 from typing import Any
 
 from typing import ClassVar
@@ -39,7 +39,7 @@ class Text(Node): ...
 
 class Uint8Array:
     @classmethod
-    def new(cls, bytes_: bytes) -> Uint8Array: ...
+    def new(cls, bytes_: Buffer) -> Uint8Array: ...
 
 class URL:
     @classmethod
