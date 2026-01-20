@@ -22,7 +22,7 @@ from .polyscript import lazy_py_modules as py_import
 from .display import HTML as HTML, display as display
 from .events import Event as Event, when as when
 from .fetch import fetch as fetch
-from .magic_js import (
+from .context import (
     RUNNING_IN_WORKER as RUNNING_IN_WORKER,
     PyWorker as PyWorker,
     config as config,

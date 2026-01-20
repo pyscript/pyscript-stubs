@@ -939,7 +939,7 @@ class Page:
     """Represents the whole page."""
 
     def __init__(self) -> None: ...
-    def __getitem__(self, selector: str) -> ElementCollection:
+    def __getitem__(self, selector: str) -> Element:
         """Get an item on the page.
 
         We don't index/slice the page like we do with `Element` and `ElementCollection`
