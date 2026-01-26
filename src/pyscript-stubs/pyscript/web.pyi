@@ -198,6 +198,9 @@ class Element:
     def click(self) -> None:
         ...
 
+    def remove(self) -> None:
+        ...
+
 class Classes:
     """A set-like interface to an element's `classList`."""
 
