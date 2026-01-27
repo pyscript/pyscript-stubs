@@ -157,6 +157,14 @@ class Element:
         ...
 
     @property
+    def innerHTML(self) -> str:
+        ...
+
+    @innerHTML.setter
+    def innerHTML(self, value: str) -> None:
+        ...
+
+    @property
     def files(self) -> FileList:
         ...
 
