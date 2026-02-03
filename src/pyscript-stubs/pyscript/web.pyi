@@ -165,6 +165,10 @@ class Element:
         ...
 
     @property
+    def outerHTML(self) -> str:
+        ...
+
+    @property
     def files(self) -> FileList:
         ...
 

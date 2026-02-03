@@ -7,7 +7,9 @@ see: https://docs.pyscript.net/2025.2.3/api/
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Coroutine
+
+from pyodide.ffi import JsProxy
 
 def _get(name: str) -> Any:
     """
@@ -21,18 +23,25 @@ def _get(name: str) -> Any:
     """
     ...
 
-class _ReadOnlyProxy:
+class _CoroutineJsProxy(JsProxy):
+    """Mockup class for functions contained in a worker."""
+    def __call__(self, *args: object, **kwargs: object) -> Coroutine[None, None, JsProxy]: ...
+
+class _WorkerJsProxy(JsProxy):
+    """Mockup class for worker objects."""
+    def __getattr__(self, name: str) -> _CoroutineJsProxy: ...
+
+class _WorkersJsProxy(JsProxy):
     """
-    Read-only proxy wrapper for worker objects.
+    Read-only proxy wrapper for workers container.
 
     Provides read-only access to worker properties through item
     and attribute access.
     """
+    def __getitem__(self, name: str) -> Coroutine[None, None, _WorkerJsProxy]: ...
+    def __getattr__(self, name: str) -> Coroutine[None, None, _WorkerJsProxy]: ...
 
-    def __getitem__(self, name: str) -> Any: ...
-    def __getattr__(self, name: str) -> Any: ...
-
-workers: _ReadOnlyProxy
+workers: _WorkersJsProxy
 """
 Read-only proxy to access named workers.
 
@@ -44,7 +53,7 @@ async def create_named_worker(
     name: str = "",
     config: dict[str, Any] | None = ...,
     type: str = ...,
-) -> Any:
+) -> JsProxy:
     """
     Create a named web worker for parallel execution.
 
