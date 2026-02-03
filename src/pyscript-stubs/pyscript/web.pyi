@@ -171,6 +171,9 @@ class Element:
     def getAttribute(self, name: str) -> str | None:
         ...
 
+    def getAttributeNames(self) -> list[str]:
+        ...
+
     def setAttribute(self, name: str, value: Any) -> None:
         ...
 
