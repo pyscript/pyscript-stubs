@@ -184,7 +184,7 @@ class Element:
     def dispatchEvent(self, event: Event | JsEvent) -> None:
         ...
 
-    def append(self, *items: Element) -> None:
+    def append(self, *items: Element | str) -> None:
         """Append the specified items to the element."""
         ...
 
