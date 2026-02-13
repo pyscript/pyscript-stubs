@@ -5,7 +5,10 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Callable
+from __future__ import annotations
+
+from collections.abc import Callable
+from typing import Any
 
 class _Known:
     """

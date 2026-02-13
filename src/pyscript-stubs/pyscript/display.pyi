@@ -5,6 +5,12 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
+from __future__ import annotations
+
+from typing import Any
+
+from .web import Element
+
 _MIME_METHODS = ...
 _MIME_RENDERERS = ...
 
@@ -12,9 +18,9 @@ class HTML:
     """
     Wrap a string so that display() can render it as plain HTML
     """
-    def __init__(self, html) -> None: ...
+    def __init__(self, html: str) -> None: ...
 
-def display(*values, target=None, append: bool = True) -> None:
+def display(*values: Any, target: Element | None = ..., append: bool = True) -> None:
     """
     A function used to display content. The function is intelligent enough to introspect the object[s] it is passed and work out how to correctly
     display the object[s] in the web page based on the following mime types::

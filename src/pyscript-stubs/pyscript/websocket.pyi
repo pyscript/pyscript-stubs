@@ -5,6 +5,8 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
+from __future__ import annotations
+
 from typing import Any, Literal
 
 code: dict[str, int]

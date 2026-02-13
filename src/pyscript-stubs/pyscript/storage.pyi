@@ -5,7 +5,9 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Type
+from __future__ import annotations
+
+from typing import Any
 
 class Storage(dict[str, Any]):
     """
@@ -51,7 +53,7 @@ class Storage(dict[str, Any]):
 
 async def storage(
     name: str = "pyscript",
-    storage_class: Type[Storage] = Storage,
+    storage_class: type[Storage] = Storage,
 ) -> Storage:
     """
     Create or access a named storage instance.

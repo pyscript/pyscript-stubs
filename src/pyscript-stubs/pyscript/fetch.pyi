@@ -5,7 +5,12 @@ see: https://docs.pyscript.net/2025.2.3/api/
 # Copyright (c) 2020-2025 Jos Verlinde
 # MIT Licensed
 
-from typing import Any, Awaitable
+from __future__ import annotations
+
+from builtins import bytearray
+
+from collections.abc import Awaitable
+from typing import Any
 
 class _Response:
     """
